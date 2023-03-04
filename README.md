@@ -96,6 +96,38 @@ pnpm install
         ```
 
       - Going forward, after making changes to the schema in `prisma.schema`, run `npx prisma db push` which will (1) run `prisma generate` to re-sync the Prisma Client and (2) push the changes to the `dev` branch on PlanetScale (see [this article](https://www.prisma.io/docs/guides/database/using-prisma-with-planetscale#how-to-make-schema-changes-with-db-push) for explanation)
+    - Postmark env vars:
+      - Create an account at [postmarkapp.com](https://postmarkapp.com). Then create two templates:
+        - Activation Template
+
+          ```
+          Hello,
+
+          Please click this link to activate your {{ product_name }} account:
+
+          {{ action_url }}
+
+          The {{ product_name }} Team
+          ```
+
+        - Sign In Template
+
+          ```
+          Hello,
+
+          Please click this link sign in to {{ product_name }}:
+
+          {{ action_url }}
+
+          Regards,
+
+          The {{ product_name }} Team
+          ```
+
+        - Copy the numeric ID numbers for each template and set the `POSTMARK_SIGN_IN_TEMPLATE` and `POSTMARK_ACTIVATION_TEMPLATE` env vars in `.env` accordingly
+        - `POSTMARK_API_TOKEN`: Go to the **API Tokens** section in your Postmark account and copy from there
+        - `SMTP_FROM`: Set to the email address where you'd like emails to be sent from
+        - Don't forget to update DKIM DNS settings for your domain to allow Postmark to send from, if applicable (visit the **Sender Signatures** section in your Postmark account to configure)
 
 3. Start the development server:
 
