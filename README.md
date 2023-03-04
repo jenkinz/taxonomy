@@ -83,6 +83,19 @@ pnpm install
     ```
 
     - `NEXTAUTH_SECRET`: generate with `openssl rand -base64 32`
+    - `DATABASE_URL`:
+      - Create a new database called `taxonomy` on [PlanetScale](https://planetscale.com/)
+      - In PlanetScale, go to **Branches** and create a new branch called `dev`
+      - Click the `dev` branch, then click the **Connect** button
+      - Change the **Connect with** dropdown to **Prisma**, copy the `DATABASE_URL` string and add it to `.env` (replacing any existing `DATABASE_URL environment variable already in there)
+      - (Optional) Back on PlanetScale > Branches, click the `main` branch and click **Promote to production branch**
+      - From the project command line, run the following to push the database schema to the PlanetScale `dev` branch:
+
+        ```sh
+        npx prisma db push
+        ```
+
+      - Going forward, after making changes to the schema in `prisma.schema`, run `npx prisma db push` which will (1) run `prisma generate` to re-sync the Prisma Client and (2) push the changes to the `dev` branch on PlanetScale (see [this article](https://www.prisma.io/docs/guides/database/using-prisma-with-planetscale#how-to-make-schema-changes-with-db-push) for explanation)
 
 3. Start the development server:
 
