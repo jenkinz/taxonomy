@@ -78,9 +78,11 @@ pnpm install
 
 2. Copy `.env.example` to `.env.local` and update the variables.
 
-```sh
-cp .env.example .env.local
-```
+    ```sh
+    cp .env.example .env.local
+    ```
+
+    - `NEXTAUTH_SECRET`: generate with `openssl rand -base64 32`
 
 3. Start the development server:
 
