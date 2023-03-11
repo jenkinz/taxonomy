@@ -15,12 +15,12 @@ export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       title: "My Contributions",
-      href: "/contributions",
+      href: "/dashboard/contributions",
       icon: "billing",
     },
     {
       title: "My Signed Letters",
-      href: "/signed-letters",
+      href: "/dashboard/signed-letters",
       icon: "post",
     },
     // {
