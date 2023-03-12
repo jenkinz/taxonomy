@@ -68,7 +68,7 @@ export default async function ContributionsPage() {
         heading="My Contributions"
         text="View GFC contribution history"
       >
-        <PostCreateButton />
+        {/* <PostCreateButton /> */}
       </DashboardHeader>
       <div>
         {contributions?.length ? (
@@ -81,10 +81,12 @@ export default async function ContributionsPage() {
         ) : (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="billing" />
-            <EmptyPlaceholder.Title>No contributions</EmptyPlaceholder.Title>
-            <EmptyPlaceholder.Description>
+            <EmptyPlaceholder.Title>
+              No contributions yet
+            </EmptyPlaceholder.Title>
+            {/* <EmptyPlaceholder.Description>
               You don&apos;t have any contributions yet.
-            </EmptyPlaceholder.Description>
+            </EmptyPlaceholder.Description> */}
             {/* <PostCreateButton
               className={cn(
                 buttonVariants({ variant: "outline" }),
