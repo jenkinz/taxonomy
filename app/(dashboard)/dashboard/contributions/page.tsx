@@ -19,6 +19,8 @@ export const metadata = {
 
 const getContributionsForUser = cache(
   async (email: string | null | undefined) => {
+    let contributions = [];
+
     if (email) {
       const options = {
         method: "POST",
@@ -35,16 +37,19 @@ const getContributionsForUser = cache(
           emails: [{ email: email }],
         }),
       };
+
       await fetch("https://api.securevan.com/v4/people/find", options)
         .then(async (response) => {
           const eaPerson = await response.json();
           if (response.ok && eaPerson) {
             console.log(`${email} vanId is ${eaPerson.vanId}`);
+            // contributions.push(...);
           }
         })
-        // .then((response) => console.log(response))
         .catch((err) => console.error(err));
     }
+
+    return contributions;
   }
 );
 
