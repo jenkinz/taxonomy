@@ -1,4 +1,4 @@
-import { DashboardConfig } from "types"
+import { DashboardConfig } from "types";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
@@ -15,23 +15,23 @@ export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       title: "My Contributions",
-      href: "/dashboard/contributions",
+      href: "/contributions",
       icon: "billing",
     },
     {
       title: "My Signed Letters",
-      href: "/dashboard/signed-letters",
+      href: "/signed-letters",
       icon: "post",
     },
     // {
     //   title: "Billing",
-    //   href: "/dashboard/billing",
+    //   href: "/billing",
     //   icon: "billing",
     // },
     {
       title: "Settings",
-      href: "/dashboard/settings",
+      href: "/settings",
       icon: "settings",
     },
   ],
-}
+};

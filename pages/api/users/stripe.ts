@@ -1,27 +1,27 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { getServerSession } from "next-auth/next"
+import { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
 
-import { proPlan } from "@/config/subscriptions"
-import { withAuthentication } from "@/lib/api-middlewares/with-authentication"
-import { withMethods } from "@/lib/api-middlewares/with-methods"
-import { authOptions } from "@/lib/auth"
-import { stripe } from "@/lib/stripe"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
-import { absoluteUrl } from "@/lib/utils"
+import { proPlan } from "@/config/subscriptions";
+import { withAuthentication } from "@/lib/api-middlewares/with-authentication";
+import { withMethods } from "@/lib/api-middlewares/with-methods";
+import { authOptions } from "@/lib/auth";
+import { stripe } from "@/lib/stripe";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { absoluteUrl } from "@/lib/utils";
 
-const billingUrl = absoluteUrl("/dashboard/billing")
+const billingUrl = absoluteUrl("/billing");
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     try {
-      const session = await getServerSession(req, res, authOptions)
-      const user = session?.user
+      const session = await getServerSession(req, res, authOptions);
+      const user = session?.user;
 
       if (!user || !user.email) {
-        throw new Error("User not found.")
+        throw new Error("User not found.");
       }
 
-      const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+      const subscriptionPlan = await getUserSubscriptionPlan(user.id);
 
       // The user is on the pro plan.
       // Create a portal session to manage subscription.
@@ -29,9 +29,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         const stripeSession = await stripe.billingPortal.sessions.create({
           customer: subscriptionPlan.stripeCustomerId,
           return_url: billingUrl,
-        })
+        });
 
-        return res.json({ url: stripeSession.url })
+        return res.json({ url: stripeSession.url });
       }
 
       // The user is on the free plan.
@@ -52,13 +52,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         metadata: {
           userId: user.id,
         },
-      })
+      });
 
-      return res.json({ url: stripeSession.url })
+      return res.json({ url: stripeSession.url });
     } catch (error) {
-      return res.status(500).end()
+      return res.status(500).end();
     }
   }
 }
 
-export default withMethods(["GET"], withAuthentication(handler))
+export default withMethods(["GET"], withAuthentication(handler));
